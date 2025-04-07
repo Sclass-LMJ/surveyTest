@@ -273,8 +273,7 @@
         // Supabase 클라이언트 초기화
         const supabaseUrl = 'https://aoddajcinwiderpkizjj.supabase.co'
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvZGRhamNpbndpZGVycGtpempqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5NjA4MzEsImV4cCI6MjA1OTUzNjgzMX0.7FChzOEqdbaUuqLCOVy6w3HCLyDVPED-98e2umaSEmk'
-        const { createClient } = supabase
-        const supabase = createClient(supabaseUrl, supabaseKey)
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
 
         // 질문 데이터를 Supabase에서 가져오기
         async function fetchQuestions() {
@@ -288,7 +287,30 @@
                 return data
             } catch (error) {
                 console.error('질문을 가져오는 중 오류 발생:', error)
-                return questions // 오류 발생 시 기본 질문 사용
+                // 오류 발생 시 기본 질문 사용
+                return [
+                    {
+                        id: 1,
+                        question_text: "귀하의 연령대는 어떻게 되시나요?",
+                        question_type: "multiple_choice",
+                        options: ["20대 이하", "30대", "40대", "50대", "60대 이상"],
+                        required: true
+                    },
+                    {
+                        id: 2,
+                        question_text: "귀하의 직업은 무엇인가요?",
+                        question_type: "multiple_choice",
+                        options: ["학생", "직장인", "자영업", "프리랜서", "무직", "기타"],
+                        required: true
+                    },
+                    {
+                        id: 3,
+                        question_text: "일주일에 몇일 정도 운동을 하시나요?",
+                        question_type: "multiple_choice",
+                        options: ["전혀 안함", "1-2일", "3-4일", "5일 이상"],
+                        required: true
+                    }
+                ]
             }
         }
 
